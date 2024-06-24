@@ -42,4 +42,12 @@ public class ChatController {
         ChatRoom chatRoom = chatService.findRoomById(id);
         return new ChatRoomResponse(chatRoom.getRoomId(), chatRoom.getName(), chatRoom.getParticipantCount(), chatService.getTotalActiveUsers(), chatRoom.getParticipants());
     }
+
+    @GetMapping("/{roomId}/isUserInRoom")
+    public boolean isUserInRoom(@PathVariable String roomId, @RequestHeader("session-id") String sessionId) {
+        log.info("Checking if session {} is in room {}", sessionId, roomId);
+        boolean result = chatService.isUserInRoom(roomId, sessionId);
+        log.info("Session {} in room {}: {}", sessionId, roomId, result);
+        return result;
+    }
 }

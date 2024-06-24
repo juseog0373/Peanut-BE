@@ -88,4 +88,12 @@ public class ChatService {
     public int getTotalActiveUsers() {
         return allSessions.size();
     }
+
+    public boolean isUserInRoom(String roomId, String sessionId) {
+        ChatRoom room = chatRooms.get(roomId);
+        if (room != null) {
+            return room.getParticipants().contains(sessionId);
+        }
+        return false;
+    }
 }
