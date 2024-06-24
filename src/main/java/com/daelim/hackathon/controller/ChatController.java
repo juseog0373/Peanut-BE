@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -21,24 +22,24 @@ public class ChatController {
 
     @PostMapping("/room")
     public ChatRoomResponse createRoom(@RequestParam String name) {
-        log.info("Creation room: {}", name);
-        ChatRoom chatRoom = chatService.creatRoom(name);
-        return new ChatRoomResponse(chatRoom.getRoomId(), chatRoom.getName(), chatRoom.getUserInRoomCount(), chatRoom.getAllUserCount());
+        log.info("Creating chat room with name: {}", name);
+        ChatRoom chatRoom = chatService.createRoom(name);
+        return new ChatRoomResponse(chatRoom.getRoomId(), chatRoom.getName(), chatRoom.getParticipantCount(), chatService.getTotalActiveUsers(), chatRoom.getParticipants());
     }
 
     @GetMapping("/rooms")
-    public ResponseEntity<List<ChatRoomResponse>> findAllRooms() {
-        List<ChatRoomResponse> chatRooms = chatService.findAllRoom()
-                .stream()
-                .map(room -> new ChatRoomResponse(room.getRoomId(), room.getName(), room.getUserInRoomCount(), room.getAllUserCount()))
-                .toList();
+    public List<ChatRoomResponse> findAllRooms() {
+        log.info("Retrieving all chat rooms");
+        List<ChatRoom> chatRooms = chatService.findAllRoom();
         log.info("Found {} rooms", chatRooms.size());
-        return ResponseEntity.ok().body(chatRooms);
+        return chatRooms.stream()
+                .map(room -> new ChatRoomResponse(room.getRoomId(), room.getName(), room.getParticipantCount(), chatService.getTotalActiveUsers(), room.getParticipants()))
+                .toList();
     }
 
-    @GetMapping("/room/{roomId}")
-    public ChatRoomResponse findRoomById(@PathVariable String roomId) {
-        ChatRoom chatRoom = chatService.findRoomById(roomId);
-        return new ChatRoomResponse(chatRoom.getRoomId(), chatRoom.getName(), chatRoom.getUserInRoomCount(), chatRoom.getAllUserCount());
+    @GetMapping("/room/{id}")
+    public ChatRoomResponse findRoomById(@PathVariable String id) {
+        ChatRoom chatRoom = chatService.findRoomById(id);
+        return new ChatRoomResponse(chatRoom.getRoomId(), chatRoom.getName(), chatRoom.getParticipantCount(), chatService.getTotalActiveUsers(), chatRoom.getParticipants());
     }
 }

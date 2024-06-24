@@ -17,14 +17,14 @@ import java.util.*;
 @Service
 public class ChatService {
 
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private Map<String, ChatRoom> chatRooms;
-    private Set<WebSocketSession> sessions;
+    private Set<WebSocketSession> allSessions;
 
     @PostConstruct
     private void init() {
         chatRooms = new LinkedHashMap<>();
-        sessions = new HashSet<>();  // sessions 필드를 초기화합니다.
+        allSessions = new HashSet<>();
     }
 
     public List<ChatRoom> findAllRoom() {
@@ -35,7 +35,7 @@ public class ChatService {
         return chatRooms.get(roomId);
     }
 
-    public ChatRoom creatRoom(String name) {
+    public ChatRoom createRoom(String name) {
         String roomId = UUID.randomUUID().toString();
 
         ChatRoom room = ChatRoom.builder()
@@ -48,22 +48,30 @@ public class ChatService {
     }
 
     public <T> void sendMessage(WebSocketSession session, T message) {
-        try{
+        try {
             session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
     }
 
-    public void addSession(WebSocketSession session) {
-        sessions.add(session);
+    public void addSessionToRoom(String roomId, WebSocketSession session) {
+        ChatRoom room = chatRooms.get(roomId);
+        if (room != null) {
+            room.addSession(session);
+        }
+        allSessions.add(session);
     }
 
-    public void removeSession(WebSocketSession session) {
-        sessions.remove(session);
+    public void removeSessionFromRoom(String roomId, WebSocketSession session) {
+        ChatRoom room = chatRooms.get(roomId);
+        if (room != null) {
+            room.removeSession(session);
+        }
+        allSessions.remove(session);
     }
 
-    public Set<WebSocketSession> getAllSessions() {
-        return sessions;
+    public int getTotalActiveUsers() {
+        return allSessions.size();
     }
 }
