@@ -26,6 +26,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         log.info(session + " 클라이언트 접속");
+        chatService.addSession(session);
     }
 
     @Override
@@ -42,18 +43,18 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
             log.info("room {}", room.toString());
 
             if (session.isOpen()) {
-                System.out.println("WebSocketChatHandler.handleTextMessage");
                 room.handleAction(session, chatMessage, chatService);
             } else {
-                log.warn("Session is closed, cannot handle message");
+                log.warn("session closed cannot handle message");
             }
         } catch (Exception e) {
-            log.error("Failed to handle message", e);
+            log.error("Failed handle message: ", e);
         }
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         log.info(session + " 클라이언트 접속 해제");
+        chatService.removeSession(session);
     }
 }

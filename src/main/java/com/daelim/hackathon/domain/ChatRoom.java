@@ -8,6 +8,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 public class ChatRoom {
@@ -37,7 +38,13 @@ public class ChatRoom {
         sessions.parallelStream().forEach(session -> service.sendMessage(session, message));
     }
 
-    public int getParticipantCount() {
+    public int getUserInRoomCount() {
         return sessions.size();
+    }
+
+    public Set<String> getAllUserCount() {
+        return sessions.stream()
+                .map(session -> session.getId())
+                .collect(Collectors.toSet());
     }
 }

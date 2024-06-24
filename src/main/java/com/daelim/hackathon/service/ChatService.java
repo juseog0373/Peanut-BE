@@ -19,10 +19,12 @@ public class ChatService {
 
     private final ObjectMapper objectMapper;
     private Map<String, ChatRoom> chatRooms;
+    private Set<WebSocketSession> sessions;
 
     @PostConstruct
     private void init() {
         chatRooms = new LinkedHashMap<>();
+        sessions = new HashSet<>();  // sessions 필드를 초기화합니다.
     }
 
     public List<ChatRoom> findAllRoom() {
@@ -51,5 +53,17 @@ public class ChatService {
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    public void addSession(WebSocketSession session) {
+        sessions.add(session);
+    }
+
+    public void removeSession(WebSocketSession session) {
+        sessions.remove(session);
+    }
+
+    public Set<WebSocketSession> getAllSessions() {
+        return sessions;
     }
 }
