@@ -41,6 +41,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
                 room.handleAction(session, chatMessage, chatService);
                 if ("ENTER".equals(chatMessage.getType())) {
                     chatService.addSessionToRoom(chatMessage.getRoomId(), session);
+                    session.sendMessage(new TextMessage("My Session ID: " + session.getId()));
                 }
             } else {
                 log.warn("session closed cannot handle message");
@@ -53,6 +54,8 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         log.info(session + " 클라이언트 접속");
+        chatService.addSession(session);
+        session.sendMessage(new TextMessage("Session ID: " + session.getId())); // 세션 ID 전송
     }
 
     @Override
@@ -66,5 +69,8 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
                 break;
             }
         }
+
+        // 세션을 allSessions에서 제거
+        chatService.removeSession(session);
     }
 }
