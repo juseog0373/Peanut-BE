@@ -55,12 +55,26 @@ public class ChatService {
         }
     }
 
+    public void addSession(WebSocketSession session) {
+        allSessions.add(session);
+    }
+
+    public void removeSession(WebSocketSession session) {
+        allSessions.remove(session);
+    }
+
     public void addSessionToRoom(String roomId, WebSocketSession session) {
         ChatRoom room = chatRooms.get(roomId);
         if (room != null) {
             room.addSession(session);
         }
         allSessions.add(session);
+    }
+
+    public Optional<WebSocketSession> getSessionById(String sessionId) {
+        return allSessions.stream()
+                .filter(session -> session.getId().equals(sessionId))
+                .findFirst();
     }
 
     public void removeSessionFromRoom(String roomId, WebSocketSession session) {
