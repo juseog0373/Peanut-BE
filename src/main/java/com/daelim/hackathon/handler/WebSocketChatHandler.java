@@ -41,7 +41,6 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
                 room.handleAction(session, chatMessage, chatService);
                 if ("ENTER".equals(chatMessage.getType())) {
                     chatService.addSessionToRoom(chatMessage.getRoomId(), session);
-                    session.sendMessage(new TextMessage("My Session ID: " + session.getId()));
                 }
             } else {
                 log.warn("session closed cannot handle message");
