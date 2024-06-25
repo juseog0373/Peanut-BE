@@ -1,6 +1,5 @@
 package com.daelim.hackathon.crawler;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -11,21 +10,19 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.TextStyle;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 @Slf4j
 public class CrawlerService {
 
-    private WebDriver driver;
     @Value("${crawler.url}")
     private String url;
 
@@ -34,21 +31,25 @@ public class CrawlerService {
         // resources/static 폴더에 있는 ChromeDriver 경로 설정
         File chromeDriver = new ClassPathResource("static/chromedriver.exe").getFile();
         System.setProperty("webdriver.chrome.driver", chromeDriver.getAbsolutePath());
+    }
 
+    private WebDriver createDriver() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless"); // 브라우저 창을 띄우지 않음
+        options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
+        return new ChromeDriver(options);
     }
 
     public Map<Integer, String> getLunchMenu() {
+        WebDriver driver = createDriver();
         try {
             driver.get(url);
 
             // 테이블 요소 찾기
             WebElement tableElement = driver.findElement(By.cssSelector(".lineTop_tbArea table"));
 
+            // 각 행을 탐색하여 요일별로 데이터를 수집합니다.
             List<WebElement> rows = tableElement.findElements(By.tagName("tr"));
             Map<Integer, String> menuByDay = new LinkedHashMap<>();
 
@@ -73,9 +74,7 @@ public class CrawlerService {
 
             return menuByDay;
         } finally {
-            if (driver != null) {
-                driver.quit();
-            }
+            driver.quit();
         }
     }
 
