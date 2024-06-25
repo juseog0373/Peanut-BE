@@ -1,8 +1,6 @@
-package com.daelim.hackathon.handler;
+package com.daelim.hackathon.chat;
 
-import com.daelim.hackathon.domain.ChatRoom;
-import com.daelim.hackathon.dto.ChatDto;
-import com.daelim.hackathon.service.ChatService;
+import com.daelim.hackathon.chat.dto.ChatDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

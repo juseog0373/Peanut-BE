@@ -1,6 +1,6 @@
-package com.daelim.hackathon.service;
+package com.daelim.hackathon.chat;
 
-import com.daelim.hackathon.domain.ChatRoom;
+import com.daelim.hackathon.chat.ChatRoom;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
