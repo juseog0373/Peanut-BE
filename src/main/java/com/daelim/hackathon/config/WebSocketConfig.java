@@ -1,6 +1,6 @@
 package com.daelim.hackathon.config;
 
-import com.daelim.hackathon.handler.WebSocketChatHandler;
+import com.daelim.hackathon.chat.WebSocketChatHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;

@@ -1,17 +1,11 @@
-package com.daelim.hackathon.controller;
+package com.daelim.hackathon.chat;
 
-import com.daelim.hackathon.domain.ChatRoom;
-import com.daelim.hackathon.dto.ChatRoomResponse;
-import com.daelim.hackathon.service.ChatService;
+import com.daelim.hackathon.chat.dto.ChatRoomResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @Slf4j

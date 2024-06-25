@@ -1,6 +1,5 @@
-package com.daelim.hackathon.controller;
+package com.daelim.hackathon.chat;
 
-import com.daelim.hackathon.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,7 @@ import java.util.Optional;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/session")
+@RequestMapping("/room")
 public class SessionController {
 
     private final ChatService chatService;

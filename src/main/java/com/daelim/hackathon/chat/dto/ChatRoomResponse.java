@@ -1,4 +1,4 @@
-package com.daelim.hackathon.dto;
+package com.daelim.hackathon.chat.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

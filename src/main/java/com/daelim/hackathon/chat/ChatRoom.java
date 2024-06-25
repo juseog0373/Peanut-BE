@@ -1,7 +1,6 @@
-package com.daelim.hackathon.domain;
+package com.daelim.hackathon.chat;
 
-import com.daelim.hackathon.dto.ChatDto;
-import com.daelim.hackathon.service.ChatService;
+import com.daelim.hackathon.chat.dto.ChatDto;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.socket.WebSocketSession;
