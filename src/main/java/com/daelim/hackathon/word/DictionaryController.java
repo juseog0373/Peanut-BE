@@ -34,6 +34,7 @@ public class DictionaryController {
             lastWord = word;
             return new GameResponse(true, "Word accepted.", lastWord);
         } else {
+            lastWord = ""; // false가 반환될 때 lastWord 초기화
             return new GameResponse(false, "Word not found in dictionary.", lastWord);
         }
     }
