@@ -34,7 +34,8 @@ public class DictionaryService {
 
         // 이미 사용된 단어인 경우 false 반환
         if (usedWords.contains(query)) {
-            return new SuccessResponse(false, "Word already used.");
+            usedWords.clear(); // 사용된 단어 목록 초기화
+            return new SuccessResponse(false, "Word already used. Game restarted.");
         }
 
         StringBuilder result = new StringBuilder();
