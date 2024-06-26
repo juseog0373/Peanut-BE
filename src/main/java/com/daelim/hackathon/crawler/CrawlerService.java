@@ -29,7 +29,7 @@ public class CrawlerService {
     @PostConstruct
     public void setupDriver() throws IOException {
         // resources/static 폴더에 있는 ChromeDriver 경로 설정
-        File chromeDriver = new ClassPathResource("static/chromedriver.exe").getFile();
+        File chromeDriver = new ClassPathResource("static/chromedriver").getFile();
         System.setProperty("webdriver.chrome.driver", chromeDriver.getAbsolutePath());
     }
 

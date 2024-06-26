@@ -4,8 +4,6 @@ public class SuccessResponse {
     private boolean success;
     private String message;
 
-    private String lastWord;
-
     public SuccessResponse() {}
 
     public SuccessResponse(boolean success, String message) {
