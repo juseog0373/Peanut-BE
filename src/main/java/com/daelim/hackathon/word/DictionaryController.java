@@ -24,8 +24,9 @@ public class DictionaryController {
     }
 
     @GetMapping("/game")
-    public GameResponse wordGame(@RequestParam String word) {
+    public GameResponse wordGame(@RequestParam(name="word") String word) {
         if (!lastWord.isEmpty() && !word.startsWith(String.valueOf(lastWord.charAt(lastWord.length() - 1)))) {
+            lastWord="";
             return new GameResponse(false, "The word does not start with the last character of the previous word.", lastWord);
         }
 
