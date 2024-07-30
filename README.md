@@ -6,7 +6,7 @@
 **웹 소캣을 활용한 채팅방 개설, 실시간 1:N 채팅 기능 구현**
 
 ![image](https://github.com/juseog0373/Peanut-BE/assets/47583158/7ab04534-e87e-4d3c-8463-47d3a334525b)
-**셀레니움 라이브러리를 사용한 대림대학교 동적인 학식 정보 크롤링 구현**   
+**셀레니움 라이브러리를 사용한 동적 학식 정보 크롤링 구현**   
 
 ![image](https://github.com/juseog0373/Peanut-BE/assets/47583158/b8b04b0b-35a4-4607-88e6-26c9fb7d3d4e)
 **한국어 사전 Open API를 활용한 끝말잇기 구현**
